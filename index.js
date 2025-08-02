@@ -16,7 +16,7 @@ function loadBooks() {
       } else {
         const tr = document.createElement('tr');
         const td = document.createElement('td');
-        td.setAttribute('colspan', '3');
+        td.setAttribute('colspan', '4');
         td.textContent = 'No books found.';
         tr.appendChild(td);
         bookList.appendChild(tr);
@@ -28,14 +28,38 @@ function loadBooks() {
       bookList.innerHTML = '';
       const tr = document.createElement('tr');
       const td = document.createElement('td');
-      td.setAttribute('colspan', '3');
+      td.setAttribute('colspan', '4');
       td.textContent = 'Failed to load books.';
       tr.appendChild(td);
       bookList.appendChild(tr);
     });
 }
 
-// Append a book row to the bottom of the table (used when loading all books)
+// Create a Delete button for a book row
+function createDeleteButton(bookId, rowElement) {
+  const btn = document.createElement('button');
+  btn.textContent = 'Delete';
+
+  btn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete this book?')) {
+      fetch(`https://bookstore-api-six.vercel.app/api/books/${bookId}`, {
+        method: 'DELETE',
+      })
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to delete book');
+          // Remove the row from the table
+          rowElement.remove();
+        })
+        .catch(error => {
+          console.error('Error deleting book:', error);
+          alert('Failed to delete the book. Please try again.');
+        });
+    }
+  });
+
+  return btn;
+}
+
 function appendBookToList(book) {
   const bookList = document.getElementById('book-list');
 
@@ -53,10 +77,13 @@ function appendBookToList(book) {
   tdPublisher.textContent = book.publisher || 'N/A';
   tr.appendChild(tdPublisher);
 
+  const tdActions = document.createElement('td');
+  tdActions.appendChild(createDeleteButton(book.id, tr));
+  tr.appendChild(tdActions);
+
   bookList.appendChild(tr);
 }
 
-// Prepend a book row to the top of the table (used when adding a new book)
 function prependBookToList(book) {
   const bookList = document.getElementById('book-list');
 
@@ -73,6 +100,10 @@ function prependBookToList(book) {
   const tdPublisher = document.createElement('td');
   tdPublisher.textContent = book.publisher || 'N/A';
   tr.appendChild(tdPublisher);
+
+  const tdActions = document.createElement('td');
+  tdActions.appendChild(createDeleteButton(book.id, tr));
+  tr.appendChild(tdActions);
 
   if (bookList.firstChild) {
     bookList.insertBefore(tr, bookList.firstChild);
