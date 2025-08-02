@@ -150,3 +150,11 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
 
 // Load books when page loads
 window.addEventListener('DOMContentLoaded', loadBooks);
+
+
+// Typewriter Effect for Store Name & Tagline //
+    new TypeIt("#simpleUsage2", {
+    strings: "~ A Novel Way to Recycle ~",
+    speed: 80,
+    waitUntilVisible: true,
+}).go();
