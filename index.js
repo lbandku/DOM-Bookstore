@@ -1,22 +1,3 @@
-document.getElementById('book-form').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const title = document.getElementById('title').value.trim();
-  const author = document.getElementById('author').value.trim();
-  const year = document.getElementById('year').value.trim();
-
-  if (title && author && year) {
-    const bookList = document.getElementById('book-list');
-    const li = document.createElement('li');
-    li.textContent = `${title} by ${author} (${year})`;
-    bookList.appendChild(li);
-
-    // Clear form
-    this.reset();
-  }
-});
-
-
 // Fetch and display books from the API
 function loadBooks() {
   fetch('https://bookstore-api-six.vercel.app/api/books')
@@ -28,7 +9,7 @@ function loadBooks() {
     })
     .then(data => {
       const bookList = document.getElementById('book-list');
-      bookList.innerHTML = ''; // Clear any existing items
+      bookList.innerHTML = ''; // Clear previous entries
 
       data.forEach(book => {
         const li = document.createElement('li');
@@ -37,11 +18,46 @@ function loadBooks() {
       });
     })
     .catch(error => {
-      console.error('Error fetching books:', error);
+      console.error('Error loading books:', error);
     });
 }
 
-// Call loadBooks on page load
+// Handle book form submission (POST request)
+document.getElementById('book-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const title = document.getElementById('title').value.trim();
+  const author = document.getElementById('author').value.trim();
+  const year = parseInt(document.getElementById('year').value.trim(), 10);
+
+  if (title && author && year) {
+    const newBook = { title, author, year };
+
+    fetch('https://bookstore-api-six.vercel.app/api/books', {
+      method: 'POST',
+      body: JSON.stringify(newBook),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to add book');
+        }
+        return response.json();
+      })
+      .then(addedBook => {
+        console.log('Book added:', addedBook);
+        loadBooks(); // Refresh inventory list
+        e.target.reset(); // Clear form
+      })
+      .catch(error => {
+        console.error('Error adding book:', error);
+      });
+  }
+});
+
+// Load books on initial page load
 window.addEventListener('DOMContentLoaded', loadBooks);
 
 
