@@ -28,10 +28,10 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
 
   const title = document.getElementById('title').value.trim();
   const author = document.getElementById('author').value.trim();
-  const year = parseInt(document.getElementById('year').value.trim(), 10);
+  const publisher = document.getElementById('publisher').value.trim();
 
-  if (title && author && year) {
-    const newBook = { title, author, year };
+  if (title && author && publisher) {
+    const newBook = { title, author, publisher };
 
     fetch('https://bookstore-api-six.vercel.app/api/books', {
       method: 'POST',
@@ -48,7 +48,7 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
       })
       .then(addedBook => {
         console.log('Book added:', addedBook);
-        loadBooks(); // Refresh inventory list
+        loadBooks(); // Reload list from API
         e.target.reset(); // Clear form
       })
       .catch(error => {
@@ -60,4 +60,30 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
 // Load books on initial page load
 window.addEventListener('DOMContentLoaded', loadBooks);
 
+function loadBooks() {
+  fetch('https://bookstore-api-six.vercel.app/api/books')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch books');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const bookList = document.getElementById('book-list');
+      bookList.innerHTML = '';
 
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(book => {
+          const li = document.createElement('li');
+          li.textContent = `${book.title} by ${book.author} (Publisher: ${book.publisher || 'N/A'})`;
+          bookList.appendChild(li);
+        });
+      } else {
+        bookList.innerHTML = '<li>No books found.</li>';
+      }
+    })
+    .catch(error => {
+      console.error('Error loading books:', error);
+      document.getElementById('book-list').innerHTML = '<li>Failed to load books.</li>';
+    });
+}
