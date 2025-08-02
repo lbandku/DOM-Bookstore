@@ -15,3 +15,33 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
     this.reset();
   }
 });
+
+
+// Fetch and display books from the API
+function loadBooks() {
+  fetch('https://bookstore-api-six.vercel.app/api/books')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const bookList = document.getElementById('book-list');
+      bookList.innerHTML = ''; // Clear any existing items
+
+      data.forEach(book => {
+        const li = document.createElement('li');
+        li.textContent = `${book.title} by ${book.author} (${book.year})`;
+        bookList.appendChild(li);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching books:', error);
+    });
+}
+
+// Call loadBooks on page load
+window.addEventListener('DOMContentLoaded', loadBooks);
+
+
