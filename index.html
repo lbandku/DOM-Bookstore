@@ -2,38 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Book Swap</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <h1>Welcome to Book Swap!</h1>
+  <main>
+    <h1>Welcome to Book Swap!</h1>
+    <br>
+    
+    <section id="add-book">
+      <h2>Add a Book</h2>
+      <form id="book-form">
+        <label>
+          Title:
+          <input type="text" id="title" placeholder="Enter book title" required />
+        </label>
+        <label>
+          Author:
+          <input type="text" id="author" placeholder="Enter author's name" required />
+        </label>
+        <label>
+          Publisher:
+          <input type="text" id="publisher" placeholder="Enter publisher's name" required />
+        </label>
+        <button type="submit">Add Book</button>
+      </form>
+    </section>
 
-  <!-- Add Book Section -->
-<section id="add-book">
-  <h2>Add a Book</h2>
-  <form id="book-form">
-    <label>
-      Title:
-      <input type="text" id="title" placeholder="Enter book title" required />
-    </label>
-    <label>
-      Author:
-      <input type="text" id="author" placeholder="Enter author's name" required />
-    </label>
-    <label>
-      Publisher:
-      <input type="text" id="publisher" placeholder="Enter publisher's name" required />
-    </label>
-    <button type="submit">Add Book</button>
-  </form>
-</section>
-
-  <!-- Inventory Section -->
-  <section id="inventory">
-    <h2>Current Inventory</h2>
-    <ul id="book-list"></ul>
-  </section>
+    <section id="inventory">
+      <h2>Current Inventory</h2>
+      <table id="book-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+          </tr>
+        </thead>
+        <tbody id="book-list">
+          <!-- Book rows go here -->
+        </tbody>
+      </table>
+    </section>
+  </main>
 
   <script src="index.js"></script>
 </body>
