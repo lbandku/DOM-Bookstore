@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  width: 120px;
+  padding: 8px;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+#book-list {
+  list-style: none;
+  padding: 0;
+}
+
+#book-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}

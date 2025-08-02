@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Swap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Welcome to Book Swap!</h1>
+
+  <!-- Add Book Section -->
+  <section id="add-book">
+    <h2>Add a Book</h2>
+    <form id="book-form">
+      <label>
+        Title:
+        <input type="text" id="title" required />
+      </label>
+      <label>
+        Author:
+        <input type="text" id="author" required />
+      </label>
+      <label>
+        Year:
+        <input type="number" id="year" required />
+      </label>
+      <button type="submit">Add Book</button>
+    </form>
+  </section>
+
+  <!-- Inventory Section -->
+  <section id="inventory">
+    <h2>Current Inventory</h2>
+    <ul id="book-list"></ul>
+  </section>
+
+  <script src="index.js"></script>
+</body>
+</html>
