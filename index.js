@@ -11,21 +11,7 @@ function loadBooks() {
 
       if (Array.isArray(data) && data.length > 0) {
         data.forEach(book => {
-          const tr = document.createElement('tr');
-
-          const tdTitle = document.createElement('td');
-          tdTitle.textContent = book.title;
-          tr.appendChild(tdTitle);
-
-          const tdAuthor = document.createElement('td');
-          tdAuthor.textContent = book.author;
-          tr.appendChild(tdAuthor);
-
-          const tdPublisher = document.createElement('td');
-          tdPublisher.textContent = book.publisher || 'N/A';
-          tr.appendChild(tdPublisher);
-
-          bookList.appendChild(tr);
+          appendBookToList(book);
         });
       } else {
         const tr = document.createElement('tr');
@@ -47,6 +33,52 @@ function loadBooks() {
       tr.appendChild(td);
       bookList.appendChild(tr);
     });
+}
+
+// Append a book row to the bottom of the table (used when loading all books)
+function appendBookToList(book) {
+  const bookList = document.getElementById('book-list');
+
+  const tr = document.createElement('tr');
+
+  const tdTitle = document.createElement('td');
+  tdTitle.textContent = book.title;
+  tr.appendChild(tdTitle);
+
+  const tdAuthor = document.createElement('td');
+  tdAuthor.textContent = book.author;
+  tr.appendChild(tdAuthor);
+
+  const tdPublisher = document.createElement('td');
+  tdPublisher.textContent = book.publisher || 'N/A';
+  tr.appendChild(tdPublisher);
+
+  bookList.appendChild(tr);
+}
+
+// Prepend a book row to the top of the table (used when adding a new book)
+function prependBookToList(book) {
+  const bookList = document.getElementById('book-list');
+
+  const tr = document.createElement('tr');
+
+  const tdTitle = document.createElement('td');
+  tdTitle.textContent = book.title;
+  tr.appendChild(tdTitle);
+
+  const tdAuthor = document.createElement('td');
+  tdAuthor.textContent = book.author;
+  tr.appendChild(tdAuthor);
+
+  const tdPublisher = document.createElement('td');
+  tdPublisher.textContent = book.publisher || 'N/A';
+  tr.appendChild(tdPublisher);
+
+  if (bookList.firstChild) {
+    bookList.insertBefore(tr, bookList.firstChild);
+  } else {
+    bookList.appendChild(tr);
+  }
 }
 
 // Handle form submission to POST new book
@@ -73,8 +105,8 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
       })
       .then(addedBook => {
         console.log('Book added:', addedBook);
-        loadBooks(); // Refresh list after adding
-        e.target.reset(); // Clear form inputs
+        prependBookToList(addedBook);
+        e.target.reset();
       })
       .catch(error => {
         console.error('Error adding book:', error);
