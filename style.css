@@ -17,6 +17,13 @@ h1 {
   color: black;
 }
 
+h4 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: black;
+}
+
 .motto {
   text-align: center;
   font-style: italic;
@@ -110,3 +117,4 @@ h2 {
 #book-table button:hover {
   background-color: #c0392b !important;
 }
+
