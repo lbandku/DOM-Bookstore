@@ -13,8 +13,25 @@ main {
 h1 {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color: black;
+}
+
+.motto {
+  text-align: center;
+  font-style: italic;
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+}
+
+.store-image {
+  display: block;
+  margin: 0 auto 30px auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 h2 {
