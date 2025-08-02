@@ -1,28 +1,55 @@
-// Fetch and display books from the API
+// Fetch and display books from API
 function loadBooks() {
   fetch('https://bookstore-api-six.vercel.app/api/books')
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      if (!response.ok) throw new Error('Network response not OK');
       return response.json();
     })
     .then(data => {
       const bookList = document.getElementById('book-list');
-      bookList.innerHTML = ''; // Clear previous entries
+      bookList.innerHTML = '';
 
-      data.forEach(book => {
-        const li = document.createElement('li');
-        li.textContent = `${book.title} by ${book.author} (${book.year})`;
-        bookList.appendChild(li);
-      });
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(book => {
+          const tr = document.createElement('tr');
+
+          const tdTitle = document.createElement('td');
+          tdTitle.textContent = book.title;
+          tr.appendChild(tdTitle);
+
+          const tdAuthor = document.createElement('td');
+          tdAuthor.textContent = book.author;
+          tr.appendChild(tdAuthor);
+
+          const tdPublisher = document.createElement('td');
+          tdPublisher.textContent = book.publisher || 'N/A';
+          tr.appendChild(tdPublisher);
+
+          bookList.appendChild(tr);
+        });
+      } else {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.setAttribute('colspan', '3');
+        td.textContent = 'No books found.';
+        tr.appendChild(td);
+        bookList.appendChild(tr);
+      }
     })
     .catch(error => {
-      console.error('Error loading books:', error);
+      console.error('Fetch error:', error);
+      const bookList = document.getElementById('book-list');
+      bookList.innerHTML = '';
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.setAttribute('colspan', '3');
+      td.textContent = 'Failed to load books.';
+      tr.appendChild(td);
+      bookList.appendChild(tr);
     });
 }
 
-// Handle book form submission (POST request)
+// Handle form submission to POST new book
 document.getElementById('book-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -41,49 +68,22 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
       },
     })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to add book');
-        }
+        if (!response.ok) throw new Error('Failed to add book');
         return response.json();
       })
       .then(addedBook => {
         console.log('Book added:', addedBook);
-        loadBooks(); // Reload list from API
-        e.target.reset(); // Clear form
+        loadBooks(); // Refresh list after adding
+        e.target.reset(); // Clear form inputs
       })
       .catch(error => {
         console.error('Error adding book:', error);
+        alert('Failed to add book. Please try again.');
       });
+  } else {
+    alert('Please fill in all fields.');
   }
 });
 
-// Load books on initial page load
+// Load books when page loads
 window.addEventListener('DOMContentLoaded', loadBooks);
-
-function loadBooks() {
-  fetch('https://bookstore-api-six.vercel.app/api/books')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch books');
-      }
-      return response.json();
-    })
-    .then(data => {
-      const bookList = document.getElementById('book-list');
-      bookList.innerHTML = '';
-
-      if (Array.isArray(data) && data.length > 0) {
-        data.forEach(book => {
-          const li = document.createElement('li');
-          li.textContent = `${book.title} by ${book.author} (Publisher: ${book.publisher || 'N/A'})`;
-          bookList.appendChild(li);
-        });
-      } else {
-        bookList.innerHTML = '<li>No books found.</li>';
-      }
-    })
-    .catch(error => {
-      console.error('Error loading books:', error);
-      document.getElementById('book-list').innerHTML = '<li>Failed to load books.</li>';
-    });
-}
