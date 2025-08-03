@@ -3,29 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Page Title -->
   <title>Book Swap</title>
+
+  <!-- Link to CSS File -->
   <link rel="stylesheet" href="style.css" />
 
-    <!-- Link Google Font Roboto -->
+  <!-- Link to Google Fonts: Roboto -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-      <!-- Link Typewriter Effect -->
-<script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
-  <h1>Welcome to Book Swap!</h1>
-      <h4 id="simpleUsage2" class="typeTagline"></h4>  <!-- Type Store Tagline: A Novel Way to Recycle -->
-<br>
-<br>
-
+  <!-- Link to Typewriter Effect Library -->
+  <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
 </head>
+
 <body>
   <main>
-    <!-- Insert Book Swap Image -->
+  <br>
+  <br>
+    <!-- Site Header with Store Name -->
+    <h1>Welcome to Book Swap!</h1>
+    <h4 id="simpleUsage2" class="typeTagline"></h4> <!-- Typewriter Motto/Tagline -->
+  <br>
+  <br>
+    <!-- Store Image -->
     <img src="assets/book_swap_image.jpg" alt="Book Swap Illustration" class="store-image" />
-    <br>
-    <br>
-
+  <br>
+  <br>
+  <br>
+  <br>
+    <!-- Add New Book Form -->
     <section id="add-book">
       <h2>Add a Book</h2>
       <form id="book-form">
@@ -45,7 +54,9 @@
       </form>
     </section>
   <br>
-  
+  <br>
+
+    <!-- Current Inventory List in Table -->
     <section id="inventory">
       <h2>Books in Stock</h2>
       <table id="book-table">
@@ -58,12 +69,22 @@
           </tr>
         </thead>
         <tbody id="book-list">
-          <!-- Book rows go here -->
+          <!-- Book rows inserted dynamically -->
         </tbody>
       </table>
     </section>
+  <br>
+  <br>
+
+    <!-- Footer -->
+    <div class="copyright">
+      Handcrafted by Jax &#169; twentytwentyfive. All rights reserved.
+    </div>
   </main>
 
+  <!-- Link to JavaScript File -->
   <script src="index.js"></script>
 </body>
 </html>
+
+
