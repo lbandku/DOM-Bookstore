@@ -1,16 +1,21 @@
+/* Overall page styling */
 body {
   font-family: Roboto, sans-serif;
   margin: 20px;
-  background-color: #f0f8ff;
+  background-color: #e7decc;
   color: #333;
 }
 
+/* Content width and alignment */
 main {
   max-width: 700px;
   margin: 0 auto;
   padding: 20px;
 }
 
+/* Header Styling */
+
+/* Main heading -- Store Name */
 h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -18,6 +23,7 @@ h1 {
   color: black;
 }
 
+/* Subheading -- Store Motto/Tagline (animated text) */
 h4 {
   text-align: center;
   font-size: 1.5rem;
@@ -25,6 +31,7 @@ h4 {
   color: black;
 }
 
+/* Store motto styling */
 .motto {
   text-align: center;
   font-style: italic;
@@ -34,20 +41,27 @@ h4 {
   font-size: 1.2rem;
 }
 
+/* Store Image Styling */
 .store-image {
   display: block;
   margin: 0 auto 30px auto;
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 2px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: 
+    rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+    rgba(6, 24, 44, 0.65) 0px 4px 2px -1px,
+    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
+/* Section Header Styling -- Add Book & Inventory */
 h2 {
   border-bottom: 2px solid #666;
   padding-bottom: 6px;
 }
 
+/* Add New Book Form Styling */
+/* Form layout: vertical stacking */
 #add-book form {
   display: flex;
   flex-direction: column;
@@ -55,6 +69,7 @@ h2 {
   margin-bottom: 40px;
 }
 
+/* Label and input alignment */
 #add-book label {
   display: flex;
   flex-direction: column;
@@ -62,6 +77,7 @@ h2 {
   font-size: 0.95rem;
 }
 
+/* Input field styling */
 #add-book input {
   padding: 8px;
   font-size: 1rem;
@@ -69,6 +85,7 @@ h2 {
   border-radius: 4px;
 }
 
+/* Submit (Add Book) button */
 #add-book button {
   width: 150px;
   padding: 10px;
@@ -81,16 +98,23 @@ h2 {
   cursor: pointer;
 }
 
+/* Submit (Add Book) button on hover */
 #add-book button:hover {
   background-color: #2ab094;
 }
 
+/* Inventory Table Styling */
+/* Table layout and outer border */
 #book-table {
   width: 100%;
   border-collapse: collapse;
-    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 2px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: 
+    rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+    rgba(6, 24, 44, 0.65) 0px 4px 2px -1px,
+    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
+/* Table cells */
 #book-table th,
 #book-table td {
   border: 1px solid #ccc;
@@ -98,17 +122,20 @@ h2 {
   text-align: left;
 }
 
+/* Table header row */
 #book-table th {
   background-color: #e4e4e4;
 }
 
+/* Alternate row coloring */
 #book-table tr:nth-child(even) {
   background-color: #f6f6f6;
 }
 
+/* Delete Button Styling (located inside table) */
 #book-table button {
   font-weight: bold;
-  background-color: #DE4453;
+  background-color: #CD5C5C;
   color: white;
   border: none;
   padding: 6px 10px;
@@ -117,7 +144,84 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
+/* Hover effect for Delete Buttons */
 #book-table button:hover {
   background-color: #E87A84 !important;
 }
+
+/* Footer Styling */
+/* Footer copyright message */
+.copyright {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+/* --- Responsive Design -- Mobile-first is default --- */
+/* Tablet Styling */
+@media (min-width: 600px) {
+  /* Tablet header sizes */
+  h1 {
+    font-size: 3rem; /* Store Name */
+  }
+
+  h4 {
+    font-size: 1.75rem; /* Store Tagline */
+  }
+
+  /* Tablet Image size */
+  .store-image {
+    max-width: 80%;
+  }
+
+  /* Input & button sizes */
+  #add-book input {
+    font-size: 1.1rem;
+  }
+
+  #add-book button {
+    width: 180px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Desktop Styling */
+@media (min-width: 1024px) {
+  /* Desktop width */
+  main {
+    max-width: 900px;
+  }
+
+  /* Desktop Header sizes */
+  h1 {
+    font-size: 3.5rem;  /* Store Name */
+  }
+
+  h4 {
+    font-size: 2rem;  /* Store Tagline */
+  }
+
+  /* Desktop Image size */
+  .store-image {
+    max-width: 60%;
+  }
+}
+
+/* Make Scrollable Table for Small Screens */
+@media (max-width: 500px) {
+  /* Make table scrollable -- scroll right to Delete Buttons */
+  #book-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Smaller padding for Small Screens */
+  #book-table th,
+  #book-table td {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
 

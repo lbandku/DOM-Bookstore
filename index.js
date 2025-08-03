@@ -1,4 +1,5 @@
-// Fetch and display books from API
+// Fetch and Display Books from API //
+
 function loadBooks() {
   fetch('https://bookstore-api-six.vercel.app/api/books')
     .then(response => {
@@ -7,35 +8,38 @@ function loadBooks() {
     })
     .then(data => {
       const bookList = document.getElementById('book-list');
-      bookList.innerHTML = '';
+      bookList.innerHTML = ''; // Clear existing rows //
 
       if (Array.isArray(data) && data.length > 0) {
-        data.forEach(book => {
-          appendBookToList(book);
-        });
+        data.forEach(book => appendBookToList(book));
       } else {
-        const tr = document.createElement('tr');
-        const td = document.createElement('td');
-        td.setAttribute('colspan', '4');
-        td.textContent = 'No books found.';
-        tr.appendChild(td);
-        bookList.appendChild(tr);
+        displayMessageRow('No books found.');
       }
     })
     .catch(error => {
       console.error('Fetch error:', error);
-      const bookList = document.getElementById('book-list');
-      bookList.innerHTML = '';
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      td.setAttribute('colspan', '4');
-      td.textContent = 'Failed to load books.';
-      tr.appendChild(td);
-      bookList.appendChild(tr);
+      displayMessageRow('Failed to load books.');
     });
 }
 
-// Create a Delete button for a book row
+// Display a message row in the table //
+
+function displayMessageRow(message) {
+  const bookList = document.getElementById('book-list');
+  bookList.innerHTML = '';
+
+  const tr = document.createElement('tr');
+  const td = document.createElement('td');
+  td.setAttribute('colspan', '4');
+  td.style.textAlign = 'center';
+  td.textContent = message;
+
+  tr.appendChild(td);
+  bookList.appendChild(tr);
+}
+
+// Create Delete Button for Book Row //
+
 function createDeleteButton(bookId, rowElement) {
   const btn = document.createElement('button');
   btn.textContent = 'Delete';
@@ -47,8 +51,7 @@ function createDeleteButton(bookId, rowElement) {
       })
         .then(response => {
           if (!response.ok) throw new Error('Failed to delete book');
-          // Remove the row from the table
-          rowElement.remove();
+          rowElement.remove(); // Remove row from table
         })
         .catch(error => {
           console.error('Error deleting book:', error);
@@ -60,33 +63,25 @@ function createDeleteButton(bookId, rowElement) {
   return btn;
 }
 
+// Create and Append Book Row //
+
 function appendBookToList(book) {
   const bookList = document.getElementById('book-list');
-
-  const tr = document.createElement('tr');
-
-  const tdTitle = document.createElement('td');
-  tdTitle.textContent = book.title;
-  tr.appendChild(tdTitle);
-
-  const tdAuthor = document.createElement('td');
-  tdAuthor.textContent = book.author;
-  tr.appendChild(tdAuthor);
-
-  const tdPublisher = document.createElement('td');
-  tdPublisher.textContent = book.publisher || 'N/A';
-  tr.appendChild(tdPublisher);
-
-  const tdActions = document.createElement('td');
-  tdActions.appendChild(createDeleteButton(book.id, tr));
-  tr.appendChild(tdActions);
-
-  bookList.appendChild(tr);
+  bookList.appendChild(createBookRow(book));
 }
+
+// Create and Prepend a Book Row (for New Book) //
 
 function prependBookToList(book) {
   const bookList = document.getElementById('book-list');
+  const row = createBookRow(book);
 
+  bookList.insertBefore(row, bookList.firstChild);
+}
+
+// Build Table Row HTML Element for a Book //
+
+function createBookRow(book) {
   const tr = document.createElement('tr');
 
   const tdTitle = document.createElement('td');
@@ -105,17 +100,15 @@ function prependBookToList(book) {
   tdActions.appendChild(createDeleteButton(book.id, tr));
   tr.appendChild(tdActions);
 
-  if (bookList.firstChild) {
-    bookList.insertBefore(tr, bookList.firstChild);
-  } else {
-    bookList.appendChild(tr);
-  }
+  return tr;
 }
 
-// Handle form submission to POST new book
+// Handle Form Submission -- POST New Book //
+
 document.getElementById('book-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
+  // Read form values
   const title = document.getElementById('title').value.trim();
   const author = document.getElementById('author').value.trim();
   const publisher = document.getElementById('publisher').value.trim();
@@ -123,6 +116,7 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
   if (title && author && publisher) {
     const newBook = { title, author, publisher };
 
+    // Send POST request to API //
     fetch('https://bookstore-api-six.vercel.app/api/books', {
       method: 'POST',
       body: JSON.stringify(newBook),
@@ -135,9 +129,8 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
         return response.json();
       })
       .then(addedBook => {
-        console.log('Book added:', addedBook);
-        prependBookToList(addedBook);
-        e.target.reset();
+        prependBookToList(addedBook); // Add to top of table //
+        e.target.reset();             // Clear (reset) form //
       })
       .catch(error => {
         console.error('Error adding book:', error);
@@ -148,13 +141,16 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
   }
 });
 
-// Load books when page loads
+// Initialize: Load Books on Page Load //
+
 window.addEventListener('DOMContentLoaded', loadBooks);
 
+// Typewriter Tagline Effect //
 
-// Typewriter Effect for Store Name & Tagline //
-    new TypeIt("#simpleUsage2", {
-    strings: "~ A Novel Way to Recycle ~",
-    speed: 80,
-    waitUntilVisible: true,
+new TypeIt("#simpleUsage2", {
+  strings: "~ A Novel Way to Recycle ~",
+  speed: 80,
+  waitUntilVisible: true,
 }).go();
+
+
